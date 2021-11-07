@@ -1,0 +1,1 @@
+export const lightGrey = 'rgba(166, 166, 166, 0.2)';
