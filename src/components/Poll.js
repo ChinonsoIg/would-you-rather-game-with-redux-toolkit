@@ -1,59 +1,91 @@
-import React, { useState } from 'react'
-import { Link } from "react-router-dom";
-import { Card, Image, Grid, Button, Form, Radio, Container } from 'semantic-ui-react';
-import { lightGrey } from "../utils/colours";
+import React, { useEffect } from 'react'
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Container } from 'semantic-ui-react';
+import PollListUnanswered from "./PollListUnanswered";
+import PollListAnswered from './PollListAnswered';
 
 
 const Poll = () => {
-  const [state, setstate] = useState({});
+  const questions = useSelector(state => state.questions.questions.questions);
+  const authedUser = useSelector(state => state.users.currentUser);
   
-  const handleChange = (e, { value }) => {
-    console.log('v: ',{value});
-    setstate({ value })
-  };
+  const params = useParams();
+  const { id } = params;
+  
+  const pollView = Object.keys(questions)
+    .filter((i) => (
+      questions[i].id === id
+    ))
+    .map(question => {
+      const mapPollView = {
+        id: questions[question].id,
+        author: questions[question].author,
+        optionOne: {
+          votes: questions[question].optionOne.votes,
+          text: questions[question].optionOne.text,
+        },
+        optionTwo: {
+          votes: questions[question].optionTwo.votes,
+          text: questions[question].optionTwo.text,
+        }
+      }
+      return mapPollView;
+    });
+
+  
+    useEffect(() => {
+     
+    }, [id])
+
+  if (
+    pollView[0].optionOne.votes.includes(authedUser) ||
+    pollView[0].optionTwo.votes.includes(authedUser)
+    ) {
+      return (
+        <Container>
+          {
+            pollView.map((q) => {
+              let optionOneVotes = q.optionOne.votes.length;
+              let optionTwoVotes = q.optionTwo.votes.length;
+              let totalVotes = optionOneVotes + optionTwoVotes;
+              let optionOneColor = q.optionOne.votes.includes(authedUser);
+              let optionTwoColor = q.optionTwo.votes.includes(authedUser);
+              return (
+                <div key={q.id}>
+                  <PollListAnswered
+                    id={q.id}
+                    author={q.author}
+                    optionOneText={q.optionOne.text}
+                    optionTwoText={q.optionTwo.text}
+                    optionOneVotes={optionOneVotes}
+                    optionTwoVotes={optionTwoVotes}
+                    totalVotes={totalVotes}
+                    optionOneColor={optionOneColor}
+                    optionTwoColor={optionTwoColor}
+                  />
+                </div>
+              )
+            })
+          }
+        </Container>
+      );
+    }
 
   return (
     <Container>
-      <Card fluid raised>
-        <Card.Content style={{backgroundColor: lightGrey}}>
-          <Card.Header textAlign='left'>Matthew says:</Card.Header>
-        </Card.Content> 
-        <Card.Content>
-          <Grid verticalAlign='middle'>
-            <Grid.Row>
-              <Grid.Column width={5}>
-                <Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' size='medium' circular />
-              </Grid.Column>
-              <Grid.Column width={11} textAlign='left'>
-                <h3>Would you rather ...</h3>
-                <Form>
-                  <Form.Field>
-                    <Radio
-                      label='Choose this'
-                      name='radioGroup'
-                      value='optionOne'
-                      checked={state.value === 'optionOne'}
-                      onChange={handleChange}
-                    />
-                  </Form.Field>
-                  <Form.Field>
-                    <Radio
-                      label='Or that'
-                      name='radioGroup'
-                      value='optionTwo'
-                      checked={state.value === 'optionTwo'}
-                      onChange={handleChange}
-                    />
-                  </Form.Field>
-                </Form>
-                <Button /*</Grid.Column>as={Link} to={`/question/id`}*/ color='teal' fluid style={{marginTop: '5px'}}>
-                  Submit
-                </Button>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Card.Content>
-      </Card>
+      {
+        pollView.map((q) => (
+          <div key={q.id}>
+            <PollListUnanswered
+              id={q.id}
+              author={q.author}
+              optionOneText={q.optionOne.text}
+              optionTwoText={q.optionTwo.text}
+            />
+          </div>
+        ))
+      }
     </Container>
   )
 }

@@ -1,30 +1,96 @@
-import React, { useEffect } from "react";
 import { Container, Tab } from 'semantic-ui-react'
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../redux/slices/userSlice";
-import { selectUser, users } from "../redux/slices/userSlice";
-import { getInitialData } from "../utils/api";
-import { getTodosAsync } from "../redux/slices/userSlice";
+import { useSelector } from "react-redux";
 import Polls from "../components/Polls";
 
 
-const Home = (props) => {
-  const dispatch = useDispatch();
-  // const users = useSelector(users);
+const Home = () => {
+  const questions = useSelector(state => state.questions.questions.questions);
+  const authedUser = useSelector(state => state.users.currentUser);
+
+  const unansweredQuestions = Object.keys(questions)
+    .filter((i) => (
+        !questions[i].optionOne.votes.includes(authedUser) &&
+        !questions[i].optionTwo.votes.includes(authedUser)
+    ))
+    .sort((a,b) => (
+        questions[b].timestamp - questions[a].timestamp
+    ))
+    .map(question => {
+      const mapUnansweredQuestions = {
+        id: questions[question].id,
+        author: questions[question].author,
+        optionOne: {
+          votes: questions[question].optionOne.votes,
+          text: questions[question].optionOne.text,
+        },
+        optionTwo: {
+          votes: questions[question].optionTwo.votes,
+          text: questions[question].optionTwo.text,
+        }
+      }
+    return mapUnansweredQuestions;
+    });
+  
+  const answeredQuestions = Object.keys(questions)
+    .filter((i) => (
+      questions[i].optionOne.votes.includes(authedUser) ||
+      questions[i].optionTwo.votes.includes(authedUser)
+    ))
+    .sort((a,b) => (
+      questions[b].timestamp - questions[a].timestamp
+    ))
+    .map(question => {
+      const mapUnansweredQuestions = {
+        id: questions[question].id,
+        author: questions[question].author,
+        optionOne: {
+          votes: questions[question].optionOne.votes,
+          text: questions[question].optionOne.text,
+        },
+        optionTwo: {
+          votes: questions[question].optionTwo.votes,
+          text: questions[question].optionTwo.text,
+        }
+      }
+    return mapUnansweredQuestions;
+    });
+
   
   const panes = [
     { 
       menuItem: 'Unanswered Questions', 
       render: () => 
         <Tab.Pane>
-          <Polls />
+          {
+            unansweredQuestions.map(q => (
+              <li key={q.id}>
+                <Polls 
+                  id={q.id}
+                  author={q.author}
+                  optionOne={q.optionOne}
+                  optionTwo={q.optionTwo}
+                />
+              </li>
+            ))
+          }
         </Tab.Pane> 
     },
     { 
       menuItem: 'Answered Questions', 
       render: () => 
         <Tab.Pane>
-          <Polls />
+          {
+            answeredQuestions.map(q => (
+              <li key={q.id}>
+                <Polls 
+                  id={q.id}
+                  author={q.author}
+                  optionOne={q.optionOne}
+                  optionTwo={q.optionTwo}
+                />
+              </li>
+            ))
+          }
         </Tab.Pane> 
     },
   ];

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card, Grid, GridColumn, GridRow, Header, Image, Segment } from "semantic-ui-react";
+import { Card, Grid, Header, Image } from "semantic-ui-react";
 
 const LeaderboardSlice = () => {
-  const square = { width: 50, height: 50 }
+  
   return (
     <Card fluid raised>
       <Card.Content>

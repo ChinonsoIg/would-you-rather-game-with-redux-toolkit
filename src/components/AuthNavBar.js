@@ -19,7 +19,7 @@ const AuthNavBar = () => {
       name: users[filteredUser].name, 
       avatar: users[filteredUser].avatarURL.default 
     };
-  })
+  });
 
   const handleItemClick = (e, { name }) => {
     return setState({activeItem: name});
@@ -66,7 +66,7 @@ const AuthNavBar = () => {
         authedUser && (
           <Menu.Menu position='right'>
             <Menu.Item>
-              Hello, {userDetails && userDetails[0].name}
+              {userDetails && userDetails[0].name}
             </Menu.Item>
             <Image avatar src={userDetails && userDetails[0].avatar} style={{marginTop:'0.35em'}} />
             <Menu.Item

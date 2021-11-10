@@ -1,6 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from "react-redux";
-import { _getUsers, _getQuestions, _saveQuestion, _saveQuestionAnswer } from "../../utils/_DATA";
 import { getInitialUsers } from "../../utils/api";
 
 
@@ -17,11 +15,9 @@ export const userSlice = createSlice({
   initialState: {
     allUsers: {},
     currentUser: null,
-    ghgh: 'hy'
   },
   reducers: {
     login: (state, action) => {
-      console.log(action.payload)
       state.currentUser = action.payload;
 		},
     logout: (state) => {
