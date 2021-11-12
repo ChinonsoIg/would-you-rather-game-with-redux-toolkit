@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from 'axios'
 import { getInitialQuestions } from "../../utils/api";
 import { _saveQuestionAnswer } from "../../utils/_DATA";
 
@@ -30,26 +31,31 @@ export const fetchQuestionsAsync = createAsyncThunk(
 
 export const saveQuestionAnswerAsync = createAsyncThunk(
   'questions/saveQuestionAnswerAsync',
-  async (payload) => {
-    // const response = await saveQuestionAnswer({payload})
-    // console.log('res: ', response)
-    // return response
-    // const res = await _saveQuestionAnswer({payload})
-    const { authedUser, qid, answer } = payload
-    console.log('res: ', authedUser, qid, answer)
+  // (payload) => {
+  //   console.log('payload: ', payload);
+  //   return axios.post(saveQuestionAnswer(payload))
+  // }
+  async (ans) => {
+    console.log('await1: ', ans);
+    const res = await _saveQuestionAnswer(ans)
+    console.log('await2: ', res);
 
-    const res = await _saveQuestionAnswer({authedUser, qid, answer})
-
-    return res;
-    
+    return res;  
   }
-)
+);
+
+// export const fetchQuestions = () => async (dispatch) => {
+//   dispatch(questionsLoading())
+//   const response = await getInitialQuestions()
+//   dispatch(questionsReceived(response))
+// }
 
 export const questionsSlice = createSlice({
   name: 'questions',
   initialState: {
     loading: 'idle',
     questions: {},
+    answers: [],
   },
   reducers: {
     questionsLoading(state, action) {
@@ -69,19 +75,28 @@ export const questionsSlice = createSlice({
       state.questions = {...action.payload}
     });
     builder.addCase(saveQuestionAnswerAsync.fulfilled, (state, action) => {
-      console.log(action.payload)
-      // state.questions = { ...state.questions, ...action.payload }
-    })
+      console.log('action: ',action)
+      // state.answers.push(action.payload)
+    });
   }
 })
 
 
-// const { questionsLoading, questionsReceived } = questionsSlice.actions
+// const { questionsLoading, questionsReceived, answersReceived } = questionsSlice.actions
 
 // export const fetchQuestions = () => async (dispatch) => {
 //   dispatch(questionsLoading())
 //   const response = await getInitialQuestions()
 //   dispatch(questionsReceived(response))
 // }
+
+// ...state,
+//   [action.questionId] : {
+//       ...state[action.questionId],
+//       [action.answer]: {
+//           ...state[action.questionId][action.answer],
+//           votes: state[action.questionId][action.answer].votes.concat([action.authedUser])
+//       }
+//   }
 
 export default questionsSlice.reducer;

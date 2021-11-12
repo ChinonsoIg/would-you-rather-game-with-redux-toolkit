@@ -27,10 +27,10 @@ const App = () => {
 
 
   return (
-    <div className="App">
+    <div>
       <Router>
         <AuthNavBar />
-        <div>
+        <div className="root-container">
           <Switch>
             <Route path="/login">
               <Login />

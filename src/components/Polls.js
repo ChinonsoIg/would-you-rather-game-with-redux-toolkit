@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Card, Image, Grid, Button, Header } from 'semantic-ui-react';
-import { darkTeal, lightGrey } from "../utils/colours";
+import { darkPurple, lighterPurple } from "../utils/colours";
 
 const Polls = (props) => {
   const users = useSelector(state => state.users.allUsers)
@@ -16,8 +16,8 @@ const Polls = (props) => {
 
   return (
     <Card fluid raised>
-      <Card.Content style={{backgroundColor: lightGrey}}>
-        <Header as='h4' textAlign='left' style={{color: darkTeal}}>{userDetails[0].name} says:</Header>
+      <Card.Content style={{backgroundColor: lighterPurple}}>
+        <Header as='h4' textAlign='left' style={{color: darkPurple}}>{userDetails[0].name} says:</Header>
       </Card.Content>
       <Card.Content>
         <Grid divided verticalAlign='middle'>
@@ -26,9 +26,9 @@ const Polls = (props) => {
               <Image src={userDetails[0].avatar} size='tiny' circular />
             </Grid.Column>
             <Grid.Column width={11}>
-              <Header as='h5' style={{color: darkTeal}}>Would you rather</Header>
+              <Header as='h5' style={{color: darkPurple}}>Would you rather</Header>
               <p>... {optionOne.text} ... </p>
-              <Button as={Link} to={`/question/${id}`} basic color='teal' fluid>
+              <Button as={Link} to={`/question/${id}`} basic color='purple' fluid>
                 View Poll
               </Button>
             </Grid.Column>

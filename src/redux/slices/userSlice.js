@@ -33,7 +33,5 @@ export const userSlice = createSlice({
 
 
 export const { login, logout } = userSlice.actions;
-// export const selectUser = (state) => state.user.currentUser;
-// export const users = (state) => state.currentUser;
 
 export default userSlice.reducer;

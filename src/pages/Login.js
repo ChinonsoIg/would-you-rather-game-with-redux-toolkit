@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Select, Card, Image, Button, Container, Header } from 'semantic-ui-react'
+import { Select, Card, Image, Button, Container } from 'semantic-ui-react'
 import { login } from "../redux/slices/userSlice";
 import logo from "../assets/image/redux-logo.png";
-import { lightGrey } from "../utils/colours";
+import { darkPurple, lighterPurple, reduxPurple, white } from "../utils/colours";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,6 @@ const Login = () => {
   const handleChange = (e, data) => {
     e.preventDefault();
     const id = data.value;
-
     setAuthedUser(id);
   }
 
@@ -46,25 +45,31 @@ const Login = () => {
     
   return (
     <Container className="login">
-      {/* <p>You must log in to view the page at {from.pathname}</p> */}
       <Card centered raised>
-        <Card.Content textAlign='center' style={{backgroundColor: lightGrey, padding: '1px'}}>
-          <Header as='h4'>Welcome to Would You Rather Game</Header>
+        <Card.Content 
+          textAlign='center' 
+          style={{
+            backgroundColor: lighterPurple, 
+            color: darkPurple,
+            padding: '1px', 
+          }} 
+        >
+          <h4>Welcome to Would You Rather Game</h4>
           <p>Please sign in to continue</p>
         </Card.Content>
         <Card.Content textAlign='center'>
           <Image src={logo} size='tiny' />
-          <Header as='h5' color='teal'>Sign In</Header>
+          <h5 style={{color: reduxPurple}}>Sign In</h5>
           <Select 
             placeholder='Select user' 
             fluid
             options={userOptions} 
             onChange={handleChange} 
+            style={{color: reduxPurple}}
           />
           <Button
             fluid
-            color='teal'
-            style={{ marginTop: '10px' }}
+            style={{ color: white, marginTop: '10px', backgroundColor: reduxPurple }}
             onClick={handleLogin}
           >
             Sign In

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 // import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Image, Grid, Button, Form, Radio, Header } from 'semantic-ui-react';
-import { darkTeal, lightGrey } from "../utils/colours";
+import { darkPurple, lighterPurple } from "../utils/colours";
 import { saveQuestionAnswerAsync } from '../redux/slices/questionsSlice';
 
 
@@ -38,8 +38,8 @@ const PollListUnanswered = (props) => {
 
   return (
     <Card fluid raised>
-      <Card.Content style={{backgroundColor: lightGrey}}>
-        <Header as='h4' textAlign='left' style={{color: darkTeal}}>{authorDetails[0].name} says:</Header>
+      <Card.Content style={{backgroundColor: lighterPurple}}>
+        <Header as='h4' textAlign='left' style={{color: darkPurple}}>{authorDetails[0].name} says:</Header>
       </Card.Content> 
       <Card.Content>
         <Grid verticalAlign='middle'>
@@ -48,7 +48,7 @@ const PollListUnanswered = (props) => {
               <Image src={authorDetails[0].avatar} size='medium' circular />
             </Grid.Column>
             <Grid.Column width={11} textAlign='left'>
-              <Header as='h4' style={{color: darkTeal}}>Would you rather ...</Header>
+              <Header as='h4' style={{color: darkPurple}}>Would you rather ...</Header>
               <Form>
                 <Form.Field>
                   <Radio
@@ -70,11 +70,11 @@ const PollListUnanswered = (props) => {
                 </Form.Field>
               </Form>
               <Button /*</Grid.Column>as={Link} to={`/question/id`}*/ 
-                color='teal' fluid 
+                color='purple' fluid 
                 style={{marginTop: '5px'}}
                 onClick={handleSubmit}
               >
-                Submith
+                Under implementation
               </Button>
             </Grid.Column>
           </Grid.Row>

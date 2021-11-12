@@ -34,7 +34,7 @@ const AuthNavBar = () => {
   };
 
   return (
-    <Menu pointing secondary>
+    <Menu pointing secondary color='purple'>
       <Menu.Item
         as={NavLink}
         exact
@@ -42,7 +42,6 @@ const AuthNavBar = () => {
         name='home'
         active={state.activeItem === 'home'}
         onClick={handleItemClick}
-        color='teal'
       />
       <Menu.Item
         as={NavLink}
@@ -51,7 +50,6 @@ const AuthNavBar = () => {
         name='new question'
         active={state.activeItem === 'new question'}
         onClick={handleItemClick}
-        color='teal'
       />
       <Menu.Item
         as={NavLink}
@@ -60,7 +58,6 @@ const AuthNavBar = () => {
         name='leaderboard'
         active={state.activeItem === 'leaderboard'}
         onClick={handleItemClick}
-        color='teal'
       />
       {
         authedUser && (

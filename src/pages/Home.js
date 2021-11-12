@@ -1,6 +1,7 @@
 import { Container, Tab } from 'semantic-ui-react'
 import { useSelector } from "react-redux";
 import Polls from "../components/Polls";
+import { darkPurple } from '../utils/colours';
 
 
 const Home = () => {
@@ -60,7 +61,7 @@ const Home = () => {
     { 
       menuItem: 'Unanswered Questions', 
       render: () => 
-        <Tab.Pane>
+        <Tab.Pane style={{color: darkPurple}}>
           {
             unansweredQuestions.map(q => (
               <li key={q.id}>
@@ -78,7 +79,7 @@ const Home = () => {
     { 
       menuItem: 'Answered Questions', 
       render: () => 
-        <Tab.Pane>
+        <Tab.Pane  style={{color: darkPurple}}>
           {
             answeredQuestions.map(q => (
               <li key={q.id}>
@@ -96,9 +97,9 @@ const Home = () => {
   ];
   
   return (
-    <Container className='home-container' >
+    <Container>
       <Tab 
-        menu={{ widths: 2, color: 'teal', attached: true, tabular: false, pointing: true }} 
+        menu={{ widths: 2, color: 'purple', attached: true, tabular: false, pointing: true }}
         panes={panes} 
       />
     </Container>

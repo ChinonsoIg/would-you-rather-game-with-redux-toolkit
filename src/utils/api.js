@@ -2,7 +2,7 @@ import {
   _getUsers,
   _getQuestions,
   _saveQuestion,
-  // _saveQuestionAnswer,
+  _saveQuestionAnswer,
 } from "../utils/_DATA";
 
 
@@ -29,7 +29,7 @@ export function saveQuestion (question) {
   return _saveQuestion(question)
 }
 
-export function saveQuestionAnswer (authedUser, qid, answer) {
-  console.log('Info: ',{authedUser, qid, answer})
-  // return _saveQuestionAnswer({ authedUser, qid, answer })
+export function saveQuestionAnswer (ans) {
+  console.log('ans: ',ans)
+  return _saveQuestionAnswer(ans)
 }
