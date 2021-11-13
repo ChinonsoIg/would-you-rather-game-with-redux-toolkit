@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Container } from 'semantic-ui-react';
 import PollListUnanswered from "./PollListUnanswered";
 import PollListAnswered from './PollListAnswered';
+import { darkPurple } from '../utils/colours';
 
 
 const Poll = () => {

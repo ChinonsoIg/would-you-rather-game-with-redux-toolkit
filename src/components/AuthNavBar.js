@@ -1,25 +1,31 @@
-import React, { useState } from 'react';
-import { Menu, Image } from 'semantic-ui-react';
-import { NavLink } from "react-router-dom";
+import React, { useState, useRef } from 'react';
+import { Menu, Image, Dropdown } from 'semantic-ui-react';
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { logout } from "../redux/slices/userSlice";
+import { darkPurple } from '../utils/colours';
 
-const AuthNavBar = () => {
+const AuthNavBar = (props) => {
+  const { width } = props;
+
   const history = useHistory();
   const dispatch = useDispatch();
   const authedUser = useSelector(state => state.users.currentUser);
   const users = useSelector(state => state.users.allUsers)
 
+  // Menubar for width > 576
   const initialState = { activeItem: 'closest' }
   const [state, setState] = useState(initialState);
 
-  const userDetails = Object.keys(users).filter((user) => users[user].id === authedUser).map(filteredUser => {
-    return { 
-      name: users[filteredUser].name, 
-      avatar: users[filteredUser].avatarURL.default 
-    };
-  });
+  const userDetails = Object.keys(users)
+    .filter((user) => users[user].id === authedUser)
+    .map(filteredUser => {
+      return { 
+        name: users[filteredUser].name, 
+        avatar: users[filteredUser].avatarURL.default 
+      };
+    });
 
   const handleItemClick = (e, { name }) => {
     return setState({activeItem: name});
@@ -33,6 +39,66 @@ const AuthNavBar = () => {
     history.push('/login');
   };
 
+  // Check if the device width <= 576
+  if (width <= 576) {
+    return (
+      <Menu pointing secondary color='purple'>
+        <Menu.Item>
+          {
+            authedUser && (
+              <Menu.Menu position='right'>
+                <Image 
+                  avatar 
+                  src={userDetails && userDetails[0].avatar} 
+                  style={{margin:'0.35em 0 0 1rem'}} 
+                />
+                <Menu.Item 
+                  content={userDetails && userDetails[0].name}
+                  style={{
+                    color: darkPurple,
+                    paddingLeft: '0.5rem', 
+                    fontWeight: '600'
+                  }}
+                />
+              </Menu.Menu>
+            )
+          }
+        </Menu.Item>
+        <Menu.Item position='right'>
+          <Dropdown 
+            icon='bars' 
+            pointing='top right' 
+            className='link item' 
+            direction='left'
+          >
+            <Dropdown.Menu>
+              <Dropdown.Item 
+                as={Link} 
+                to='/'
+                content='Home'
+              />
+              <Dropdown.Item 
+                as={Link} 
+                to='/new'
+                content='New Question'
+              />
+              <Dropdown.Item 
+                as={Link} 
+                to='/leaderboard' 
+                content='Leaderboard' 
+              />
+              <Dropdown.Item
+                content='Log out'
+                onClick={handleLogout}
+              />
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
+      </Menu>
+    )
+  }
+
+  // Else if the device width > 576, render
   return (
     <Menu pointing secondary color='purple'>
       <Menu.Item

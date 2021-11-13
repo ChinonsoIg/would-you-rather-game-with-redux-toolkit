@@ -28,7 +28,7 @@ const Polls = (props) => {
             <Grid.Column width={11}>
               <Header as='h5' style={{color: darkPurple}}>Would you rather</Header>
               <p>... {optionOne.text} ... </p>
-              <Button as={Link} to={`/question/${id}`} basic color='purple' fluid>
+              <Button basic color='purple' as={Link} to={`/question/${id}`} fluid>
                 View Poll
               </Button>
             </Grid.Column>

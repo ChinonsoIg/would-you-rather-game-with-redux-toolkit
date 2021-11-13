@@ -69,7 +69,7 @@ const PollListUnanswered = (props) => {
                   />
                 </Form.Field>
               </Form>
-              <Button /*</Grid.Column>as={Link} to={`/question/id`}*/ 
+              <Button
                 color='purple' fluid 
                 style={{marginTop: '5px'}}
                 onClick={handleSubmit}

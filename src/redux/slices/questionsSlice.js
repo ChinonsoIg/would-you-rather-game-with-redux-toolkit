@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from 'axios'
+// import axios from 'axios'
 import { getInitialQuestions } from "../../utils/api";
-import { _saveQuestionAnswer } from "../../utils/_DATA";
+import { _saveQuestionAnswer, _getQuestions } from "../../utils/_DATA";
 
 export const addTodoAsync = createAsyncThunk(
 	'todos/addTodoAsync',
@@ -24,7 +24,8 @@ export const addTodoAsync = createAsyncThunk(
 export const fetchQuestionsAsync = createAsyncThunk(
   'questions/fetchAll',
   async () => {
-    const response = await getInitialQuestions()
+    const response = await _getQuestions
+    console.log('ress', response)
     return response
   }
 );
@@ -69,6 +70,9 @@ export const questionsSlice = createSlice({
         state.questions = {...action.payload}
       }
     },
+    addAnswer(state, action) {
+
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchQuestionsAsync.fulfilled, (state, action) => {

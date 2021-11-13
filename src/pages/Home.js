@@ -79,7 +79,7 @@ const Home = () => {
     { 
       menuItem: 'Answered Questions', 
       render: () => 
-        <Tab.Pane  style={{color: darkPurple}}>
+        <Tab.Pane  style={{color: 'darkPurple'}}>
           {
             answeredQuestions.map(q => (
               <li key={q.id}>

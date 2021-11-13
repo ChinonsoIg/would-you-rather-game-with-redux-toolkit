@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -19,6 +19,26 @@ import Poll from './components/Poll';
 const App = () => {
 
   const dispatch = useDispatch();
+
+  const [dimensions, setDimensions] = useState({ 
+    width: window.innerWidth
+  })
+
+  useEffect(() => {
+    function handleResize() {
+      setDimensions({
+        width: window.innerWidth
+      })
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return _ => {
+      window.removeEventListener('resize', handleResize)
+    }
+
+  })
+
  
   useEffect(() => {
     dispatch(getUsersAsync());
@@ -29,7 +49,7 @@ const App = () => {
   return (
     <div>
       <Router>
-        <AuthNavBar />
+        <AuthNavBar width={dimensions.width} />
         <div className="root-container">
           <Switch>
             <Route path="/login">
