@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Image, Grid, Button, Form, Radio, Header } from 'semantic-ui-react';
 import { darkPurple, lighterPurple } from "../utils/colours";
-import { saveQuestionAnswerAsync } from '../redux/slices/questionsSlice';
+import { saveAnswer } from '../redux/slices/questionsSlice';
 
 
 const PollListUnanswered = (props) => {
@@ -30,11 +30,33 @@ const PollListUnanswered = (props) => {
   
   const handleSubmit = () => {
     const value = state.value
-    console.log('submit: ',{authedUser, qid: id, answer: value})
-    dispatch(
-      saveQuestionAnswerAsync({authedUser, qid: id, answer: value})
-    );
+    if (!value) {
+      alert('Click an option!!')
+    } else {
+      console.log('submit: ',{authedUser, qid: id, answer: value})
+      dispatch(
+        saveAnswer({authedUser, qid: id, answer: value})
+      );
+    }
   }
+
+  // const handleUpdateAnswer = async (formikHelpers) => {
+  //   const value = state.value
+  //   const resultAction = await dispatch(saveAnswerAsync({ authedUser, qid: id, answer: value }));
+
+  //   if (saveAnswerAsync.fulfilled.match(resultAction)) {
+  //     // user will have a type signature of User as we passed that as the Returned parameter in createAsyncThunk
+  //     const answer = resultAction.payload
+  //     console.log('success', `Updated ${answer}`)
+  //   } else {
+  //     if (resultAction.payload) {
+  //       // Being that we passed in ValidationErrors to rejectType in `createAsyncThunk`, those types will be available here.
+  //       formikHelpers.setErrors(resultAction.payload.field_errors)
+  //     } else {
+  //       console.log('error', `Update failed: ${resultAction.error}`)
+  //     }
+  //   }
+  // }
 
   return (
     <Card fluid raised>

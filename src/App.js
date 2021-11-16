@@ -37,13 +37,13 @@ const App = () => {
       window.removeEventListener('resize', handleResize)
     }
 
-  })
+  }, [])
 
  
   useEffect(() => {
     dispatch(getUsersAsync());
     dispatch(fetchQuestionsAsync());
-  }, [dispatch])
+  })
 
 
   return (

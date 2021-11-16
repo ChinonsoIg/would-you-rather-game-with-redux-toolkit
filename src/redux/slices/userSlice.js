@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getInitialUsers } from "../../utils/api";
+import { _getUsers } from "../../utils/_DATA";
 
 
 export const getUsersAsync = createAsyncThunk(
 	'users/getUsersAsync',
 	async () => {
-		const users = await getInitialUsers();
+		const users = await _getUsers();
     return users;
 	}
 );

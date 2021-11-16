@@ -1,28 +1,28 @@
 import { 
-  _getUsers,
-  _getQuestions,
+  // _getUsers,
+  // _getQuestions,
   _saveQuestion,
   _saveQuestionAnswer,
 } from "../utils/_DATA";
 
 
-export const getInitialUsers = () => {
+// export const getInitialUsers = () => {
 
-  return Promise.all([
-    _getUsers(),
-  ]).then(([ users ]) => {
-    return users;
-  })
-};
+//   return Promise.all([
+//     _getUsers(),
+//   ]).then(([ users ]) => {
+//     return users;
+//   })
+// };
 
-export const getInitialQuestions = () => {
+// export const getInitialQuestions = () => {
 
-  return Promise.all([
-    _getQuestions(),
-  ]).then(([ questions ]) => {
-    return { questions };
-  })
-};
+//   return Promise.all([
+//     _getQuestions(),
+//   ]).then(([ questions ]) => {
+//     return { questions };
+//   })
+// };
 
 
 export function saveQuestion (question) {

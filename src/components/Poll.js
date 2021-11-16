@@ -4,11 +4,10 @@ import { useSelector } from "react-redux";
 import { Container } from 'semantic-ui-react';
 import PollListUnanswered from "./PollListUnanswered";
 import PollListAnswered from './PollListAnswered';
-import { darkPurple } from '../utils/colours';
 
 
 const Poll = () => {
-  const questions = useSelector(state => state.questions.questions.questions);
+  const questions = useSelector(state => state.questions.questions);
   const authedUser = useSelector(state => state.users.currentUser);
   
   const params = useParams();

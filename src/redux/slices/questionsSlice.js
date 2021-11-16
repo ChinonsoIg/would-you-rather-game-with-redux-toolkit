@@ -1,106 +1,100 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import axios from 'axios'
-import { getInitialQuestions } from "../../utils/api";
-import { _saveQuestionAnswer, _getQuestions } from "../../utils/_DATA";
+import { _saveQuestionAnswer, _getQuestions, _saveQuestion } from "../../utils/_DATA";
 
-export const addTodoAsync = createAsyncThunk(
-	'todos/addTodoAsync',
-	async (payload) => {
-		const resp = await fetch('http://localhost:7000/todos', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ title: payload.title }),
-		});
-
-		if (resp.ok) {
-			const todo = await resp.json();
-			return { todo };
-		}
-	}
-);
 
 export const fetchQuestionsAsync = createAsyncThunk(
   'questions/fetchAll',
   async () => {
-    const response = await _getQuestions
-    console.log('ress', response)
-    return response
+    const response = await _getQuestions();
+    return response;
   }
 );
 
-export const saveQuestionAnswerAsync = createAsyncThunk(
-  'questions/saveQuestionAnswerAsync',
-  // (payload) => {
-  //   console.log('payload: ', payload);
-  //   return axios.post(saveQuestionAnswer(payload))
-  // }
-  async (ans) => {
-    console.log('await1: ', ans);
-    const res = await _saveQuestionAnswer(ans)
-    console.log('await2: ', res);
 
-    return res;  
+export const addQuestionAsync = createAsyncThunk(
+  'questions/addQuestionAsync',
+  async (question, { rejectWithValue }) => {
+    try {
+      const response = await _saveQuestion(question);
+      return response;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(err.response);
+    }
   }
 );
 
-// export const fetchQuestions = () => async (dispatch) => {
-//   dispatch(questionsLoading())
-//   const response = await getInitialQuestions()
-//   dispatch(questionsReceived(response))
-// }
+    
+export const saveAnswerAsync = createAsyncThunk(
+  'questions/saveAnswerAsync',
+  async (data, { rejectWithValue }) => {
+    const { authedUser, qid, answer } = data
+    try {
+      console.log('res1: ', authedUser, qid, answer);
+      const response = await _saveQuestionAnswer(authedUser, qid, answer)
+      console.log('res: ', response);
+      return response.data.questions
+    } catch (err) {
+      return rejectWithValue(err.response.data)
+    }
+  }
+);
 
 export const questionsSlice = createSlice({
   name: 'questions',
   initialState: {
     loading: 'idle',
     questions: {},
-    answers: [],
   },
   reducers: {
-    questionsLoading(state, action) {
+    questionsLoading: (state, action) => {
       if (state.loading === 'idle') {
         state.loading = 'pending'
       }
     },
-    questionsReceived(state, action) {
+    questionsReceived: (state, action) => {
       if (state.loading === 'pending') {
-        state.loading = 'idle'
-        state.questions = {...action.payload}
+        state.loading = 'idle';
+        state.questions = { ...action.payload };
       }
     },
-    addAnswer(state, action) {
-
-    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchQuestionsAsync.fulfilled, (state, action) => {
-      state.questions = {...action.payload}
-    });
-    builder.addCase(saveQuestionAnswerAsync.fulfilled, (state, action) => {
-      console.log('action: ',action)
-      // state.answers.push(action.payload)
-    });
+      state.questions = action.payload;
+		})
+
+    // to add question
+		builder.addCase(addQuestionAsync.fulfilled, (state, action) => {
+      state.questions = {
+        ...state.questions,
+        [action.payload.id]: action.payload
+      }
+		})
+    builder.addCase(addQuestionAsync.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage
+      } else {
+        state.error = action.error.message
+      }
+    })
+
+    // to add answer
+    builder.addCase(saveAnswerAsync.fulfilled, (state, action) => {
+      console.log('payload: ',action.payload)
+			// state.push(action.payload.todo);
+		})
+    builder.addCase(saveAnswerAsync.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage
+      } else {
+        state.error = action.error.message
+      }
+    })
   }
 })
 
 
-// const { questionsLoading, questionsReceived, answersReceived } = questionsSlice.actions
-
-// export const fetchQuestions = () => async (dispatch) => {
-//   dispatch(questionsLoading())
-//   const response = await getInitialQuestions()
-//   dispatch(questionsReceived(response))
-// }
-
-// ...state,
-//   [action.questionId] : {
-//       ...state[action.questionId],
-//       [action.answer]: {
-//           ...state[action.questionId][action.answer],
-//           votes: state[action.questionId][action.answer].votes.concat([action.authedUser])
-//       }
-//   }
+export const { questionsLoading, questionsReceived, saveAnswer } = questionsSlice.actions;
 
 export default questionsSlice.reducer;

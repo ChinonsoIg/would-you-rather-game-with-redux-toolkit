@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Menu, Image, Dropdown } from 'semantic-ui-react';
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
