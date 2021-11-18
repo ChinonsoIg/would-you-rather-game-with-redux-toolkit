@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+// import { saveQuestionAnswer } from "../../utils/api";
 import { _saveQuestionAnswer, _getQuestions, _saveQuestion } from "../../utils/_DATA";
 
 
@@ -27,15 +28,14 @@ export const addQuestionAsync = createAsyncThunk(
     
 export const saveAnswerAsync = createAsyncThunk(
   'questions/saveAnswerAsync',
-  async (data, { rejectWithValue }) => {
-    const { authedUser, qid, answer } = data
+  async ({ authedUser, qid, answer }, { rejectWithValue }) => {
     try {
-      console.log('res1: ', authedUser, qid, answer);
-      const response = await _saveQuestionAnswer(authedUser, qid, answer)
-      console.log('res: ', response);
-      return response.data.questions
+      console.log('res1: ', {authedUser, qid, answer});
+      const response = await _saveQuestionAnswer({authedUser, qid, answer})
+      console.log('res2: ', response);
+      return response;
     } catch (err) {
-      return rejectWithValue(err.response.data)
+      return rejectWithValue(err.response);
     }
   }
 );
@@ -95,6 +95,6 @@ export const questionsSlice = createSlice({
 })
 
 
-export const { questionsLoading, questionsReceived, saveAnswer } = questionsSlice.actions;
+export const { questionsLoading, questionsReceived } = questionsSlice.actions;
 
 export default questionsSlice.reducer;

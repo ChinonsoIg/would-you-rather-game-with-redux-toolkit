@@ -16,6 +16,7 @@ const NewQuestion = () => {
 
   const handleSubmit = () => {
     if (!optionOneText || !optionTwoText) {
+      // todo add message bar
       alert('Type something!!')
     } else {
       const question = {
@@ -23,7 +24,6 @@ const NewQuestion = () => {
         optionOneText, 
         optionTwoText
       }
-      console.log('submit: ',question)
       dispatch(
         addQuestionAsync(question)
       );
@@ -31,7 +31,7 @@ const NewQuestion = () => {
 
     setTimeout(() => { 
       history.push('/')
-     }, 5000);
+     }, 3000);
     
   }
   

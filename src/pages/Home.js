@@ -8,8 +8,6 @@ const Home = () => {
   const questions = useSelector(state => state.questions.questions);
   const authedUser = useSelector(state => state.users.currentUser);
 
-  console.log('ques: ',questions)
-
   const unansweredQuestions = Object.keys(questions)
     .filter((i) => (
         !questions[i].optionOne.votes.includes(authedUser) &&
