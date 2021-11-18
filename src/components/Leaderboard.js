@@ -4,8 +4,8 @@ import LeaderboardSlice from "./LeaderboardSlice";
 import { useSelector } from "react-redux";
 
 const Leaderboard = () => {
-  const questions = useSelector(state => state.questions.questions);
-  const { currentUser, allUsers } = useSelector(state => state.users);
+  // const questions = useSelector(state => state.questions.questions);
+  const { allUsers } = useSelector(state => state.users);
 
   const usersDetails = Object.keys(allUsers)
     .map((user) => {

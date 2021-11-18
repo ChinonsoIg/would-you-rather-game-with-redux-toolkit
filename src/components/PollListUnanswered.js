@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Image, Grid, Button, Form, Radio, Header } from 'semantic-ui-react';
 import { darkPurple, lighterPurple } from "../utils/colours";
-import { saveAnswer, saveAnswerAsync } from '../redux/slices/questionsSlice';
+import { saveAnswerAsync } from '../redux/slices/questionsSlice';
 
 
 const PollListUnanswered = (props) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
 
   const { currentUser, allUsers } = useSelector(state => state.users);
   // const authedUser = useSelector(state => state.users.currentUser);
