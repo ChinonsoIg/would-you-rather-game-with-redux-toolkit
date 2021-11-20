@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-// import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Image, Grid, Button, Form, Radio, Header } from 'semantic-ui-react';
 import { darkPurple, lighterPurple } from "../utils/colours";
@@ -8,10 +7,8 @@ import { saveAnswerAsync } from '../redux/slices/questionsSlice';
 
 const PollListUnanswered = (props) => {
   const dispatch = useDispatch();
-  // const history = useHistory();
 
   const { currentUser, allUsers } = useSelector(state => state.users);
-  // const authedUser = useSelector(state => state.users.currentUser);
   const { id, author, optionOneText, optionTwoText } = props;
   
   const [selectedOption, setSelectedOption] = useState({});

@@ -46,11 +46,13 @@ const Poll = () => {
         <Container>
           {
             pollView.map((q) => {
-              let optionOneVotes = q.optionOne.votes.length;
-              let optionTwoVotes = q.optionTwo.votes.length;
-              let totalVotes = optionOneVotes + optionTwoVotes;
-              let optionOneColor = q.optionOne.votes.includes(authedUser);
-              let optionTwoColor = q.optionTwo.votes.includes(authedUser);
+              const optionOneVotes = q.optionOne.votes.length;
+              const optionTwoVotes = q.optionTwo.votes.length;
+              const totalVotes = optionOneVotes + optionTwoVotes;
+              const optionOnePercent = (optionOneVotes / totalVotes) * 100;
+              const optionTwoPercent = (optionTwoVotes / totalVotes) * 100;
+              const optionOneColor = q.optionOne.votes.includes(authedUser);
+              const optionTwoColor = q.optionTwo.votes.includes(authedUser);
               return (
                 <div key={q.id}>
                   <PollListAnswered
@@ -60,6 +62,8 @@ const Poll = () => {
                     optionTwoText={q.optionTwo.text}
                     optionOneVotes={optionOneVotes}
                     optionTwoVotes={optionTwoVotes}
+                    optionOnePercent={optionOnePercent.toFixed(1)}
+                    optionTwoPercent={optionTwoPercent.toFixed(1)}
                     totalVotes={totalVotes}
                     optionOneColor={optionOneColor}
                     optionTwoColor={optionTwoColor}

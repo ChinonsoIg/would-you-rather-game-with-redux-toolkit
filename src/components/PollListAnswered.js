@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import { Card, Grid, Header, Image, Segment, Progress } from 'semantic-ui-react';
+import VoteSticker from "./VoteSticker";
 import { darkPurple, lighterPurple, lightPurple, white } from "../utils/colours";
 
 const PollListAnswered = (props) => {
-  const { author, optionOneText, optionTwoText, optionOneVotes, optionTwoVotes, totalVotes, optionOneColor, optionTwoColor } = props;
+  const { author, optionOneText, optionTwoText, optionOneVotes, optionTwoVotes, optionOnePercent, optionTwoPercent, totalVotes, optionOneColor, optionTwoColor } = props;
 
   const users = useSelector(state => state.users.allUsers);
 
@@ -17,6 +18,7 @@ const PollListAnswered = (props) => {
       };
     });
 
+    
   return (
     <Card fluid raised>
       <Card.Content style={{backgroundColor: lighterPurple}}>
@@ -31,26 +33,30 @@ const PollListAnswered = (props) => {
             <Grid.Column width={11} textAlign='left'>
               <Header as='h4' style={{color: darkPurple}}>Results:</Header>
               <Segment style={{backgroundColor: optionOneColor ? lightPurple : white}}>
+                { optionOneColor && <VoteSticker /> }
                 <p>{optionOneText}</p>
                 <Progress 
-                  value={optionOneVotes} 
-                  total={totalVotes} 
-                  progress='percent' 
+                  progress
+                  percent={optionOnePercent}  
                   color='purple' 
-                  style={{margin: '10px 0'}} 
+                  style={{margin: '10px 0 0 0'}} 
                 />
-                <p>{`${optionOneVotes} out of ${totalVotes} votes`}</p>
+                <p style={{textAlign: 'center'}}>{`${optionOneVotes} out of ${totalVotes} votes`}</p>
               </Segment>
               <Segment style={{backgroundColor: optionTwoColor ? lightPurple : white}}>
+                { optionTwoColor && <VoteSticker /> }
                 <p>{optionTwoText}</p>
                 <Progress 
-                  value={optionTwoVotes} 
-                  total={totalVotes} 
-                  progress='percent' 
+                  // value={optionTwoPercent} 
+                  // total={totalVotes} 
+                  // progress='percent' 
+
+                  progress
+                  percent={optionTwoPercent} 
                   color='purple' 
-                  style={{margin: '10px 0'}} 
+                  style={{margin: '10px 0 0 0'}} 
                 />
-                <p>{`${optionTwoVotes} out of ${totalVotes} votes`}</p>
+                <p style={{textAlign: 'center'}}>{`${optionTwoVotes} out of ${totalVotes} votes`}</p>
               </Segment>
             </Grid.Column>
           </Grid.Row>

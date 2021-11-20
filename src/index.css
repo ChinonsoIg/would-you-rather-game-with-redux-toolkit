@@ -5,20 +5,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 .root-container {
   max-width: 600px;
   margin: 0 auto;
 }
-/* .home-container {
-  margin: auto;
-  margin-top: 3%;
-  justify-content: center;
-} */
 
 .flex-justified {
   display: flex;
@@ -34,8 +24,8 @@ code {
   background-color: purple;
   color: white;
   border-radius: 100%;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-size: 20px;
+  font-size: 26px;
+  font-family: 'Crimson Pro', serif;
 }
 
 li {
@@ -43,11 +33,21 @@ li {
   margin: 20px auto;
 }
 
-/* my-input {
-  
+.list {
+  margin: 20px auto;
 }
-my-input:focus {
-  color: purple;
-  border: rebeccapurple;
-  background-color: rebeccapurple;
-} */
+
+.sticker-container {
+  position: absolute;
+  top: 0;
+  right: -12px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 0, 0.7);
+  color: rgb(155, 118, 23);
+  border-radius: 100%;
+  font-size: 14;
+  font-family: 'Dancing Script', cursive;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Grid, Header, Image, Divider } from "semantic-ui-react";
+import { Card, Grid, Header, Image } from "semantic-ui-react";
+import { darkPurple, darkerPurple } from "../utils/colours";
 
 const LeaderboardSlice = (props) => {
   const { name, avatarURL, questionsCreated, questionsAnswered, score } = props;
@@ -7,27 +8,25 @@ const LeaderboardSlice = (props) => {
   return (
     <Card fluid raised>
       <Card.Content>
-        <Grid columns='equal'>
+        <Grid columns='equal' divided='vertically'>
           <Grid.Column>
             <Image src={avatarURL} size='tiny' circular alt={`${name} .jpg`} />
           </Grid.Column>
-          <Divider vertical ></Divider>
           <Grid.Column textAlign='justified' width={8}>
-            <Header as='h4' content={name} />
-            <Grid.Row className='flex-justified'>
+            <Header as='h4' content={name} style={{color: darkPurple}} />
+            <Grid.Row className='flex-justified' style={{color: darkerPurple}}>
               <p>Answered questions</p>
               <p>{questionsAnswered}</p>
             </Grid.Row>
-            <Grid.Row className='flex-justified'>
+            <Grid.Row className='flex-justified' style={{color: darkerPurple}}>
                 <p>Unanswered questions</p>
                 <p>{questionsCreated}</p>
             </Grid.Row>
           </Grid.Column>
-          <Divider vertical ></Divider>
           <Grid.Column>
             <Card fluid raised>
               <Card.Content textAlign='center' style={{margin: '5px auto', padding: '0'}}>
-                <Header as='h4' content='Score' />
+                <Header as='h4' content='Score' style={{color: darkPurple}} />
               </Card.Content>
               <Card.Content style={{ display: 'grid', placeItems: 'center' }} >
                 <div className='circle'>{score}</div>

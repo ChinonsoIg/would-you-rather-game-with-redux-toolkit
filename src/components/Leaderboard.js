@@ -30,14 +30,14 @@ const Leaderboard = () => {
     <Container>
       {
         usersDetails.map(userDetail => (
-          <div key={userDetail.id}>
+          <div key={userDetail.id} className='list'>
             <LeaderboardSlice 
-            name={userDetail.name}
-            avatarURL={userDetail.avatarURL}
-            questionsCreated={userDetail.questionsCreated}
-            questionsAnswered={userDetail.questionsAnswered}
-            score={userDetail.rank}
-          />
+              name={userDetail.name}
+              avatarURL={userDetail.avatarURL}
+              questionsCreated={userDetail.questionsCreated}
+              questionsAnswered={userDetail.questionsAnswered}
+              score={userDetail.rank}
+            />
           </div>
         ))
       }

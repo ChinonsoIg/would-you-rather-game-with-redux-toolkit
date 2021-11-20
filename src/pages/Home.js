@@ -64,14 +64,14 @@ const Home = () => {
         <Tab.Pane style={{color: darkPurple}}>
           {
             unansweredQuestions.map(q => (
-              <li key={q.id}>
+              <div key={q.id} className='list'>
                 <Polls 
                   id={q.id}
                   author={q.author}
                   optionOne={q.optionOne}
                   optionTwo={q.optionTwo}
                 />
-              </li>
+              </div>
             ))
           }
         </Tab.Pane> 
@@ -82,14 +82,14 @@ const Home = () => {
         <Tab.Pane  style={{color: 'darkPurple'}}>
           {
             answeredQuestions.map(q => (
-              <li key={q.id}>
+              <div key={q.id} className='list'>
                 <Polls 
                   id={q.id}
                   author={q.author}
                   optionOne={q.optionOne}
                   optionTwo={q.optionTwo}
                 />
-              </li>
+              </div>
             ))
           }
         </Tab.Pane> 
