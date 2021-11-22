@@ -43,7 +43,7 @@ const App = () => {
   useEffect(() => {
     dispatch(getUsersAsync());
     dispatch(fetchQuestionsAsync());
-  })
+  }, [dispatch])
 
 
   return (

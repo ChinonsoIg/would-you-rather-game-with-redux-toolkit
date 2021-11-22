@@ -56,23 +56,31 @@ const Home = () => {
     return mapUnansweredQuestions;
     });
 
-  
+
   const panes = [
     { 
       menuItem: 'Unanswered Questions', 
       render: () => 
         <Tab.Pane style={{color: darkPurple}}>
           {
-            unansweredQuestions.map(q => (
-              <div key={q.id} className='list'>
-                <Polls 
-                  id={q.id}
-                  author={q.author}
-                  optionOne={q.optionOne}
-                  optionTwo={q.optionTwo}
-                />
-              </div>
-            ))
+            unansweredQuestions.length === 0 
+              ? (
+                <>
+                  <p>No more unanswered questions!</p>
+                  <p>Click New Question to add more</p>
+                </>
+              ) : (
+                unansweredQuestions.map(q => (
+                  <div key={q.id} className='list'>
+                    <Polls 
+                      id={q.id}
+                      author={q.author}
+                      optionOne={q.optionOne}
+                      optionTwo={q.optionTwo}
+                    />
+                  </div>
+                ))
+              )
           }
         </Tab.Pane> 
     },
@@ -81,16 +89,24 @@ const Home = () => {
       render: () => 
         <Tab.Pane  style={{color: 'darkPurple'}}>
           {
-            answeredQuestions.map(q => (
-              <div key={q.id} className='list'>
-                <Polls 
-                  id={q.id}
-                  author={q.author}
-                  optionOne={q.optionOne}
-                  optionTwo={q.optionTwo}
-                />
-              </div>
-            ))
+            answeredQuestions.length === 0 
+              ? (
+                <>
+                  <p>Answered questions will appear here.</p>
+                  <p>You have not answered any questions yet!</p>
+                </>
+              ) : (
+                answeredQuestions.map(q => (
+                  <div key={q.id} className='list'>
+                    <Polls 
+                      id={q.id}
+                      author={q.author}
+                      optionOne={q.optionOne}
+                      optionTwo={q.optionTwo}
+                    />
+                  </div>
+                ))
+              )
           }
         </Tab.Pane> 
     },

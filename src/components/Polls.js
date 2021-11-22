@@ -13,6 +13,7 @@ const Polls = (props) => {
       avatar: users[filteredUser].avatarURL.default 
     };
   });
+  
 
   return (
     <Card fluid raised>

@@ -31,7 +31,7 @@ const NewQuestion = () => {
 
     setTimeout(() => { 
       history.push('/')
-     }, 3000);
+     }, 1000);
     
   }
   

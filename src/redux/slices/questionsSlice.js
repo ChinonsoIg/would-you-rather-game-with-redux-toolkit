@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import { saveQuestionAnswer } from "../../utils/api";
 import { _saveQuestionAnswer, _getQuestions, _saveQuestion } from "../../utils/_DATA";
 
 
@@ -30,10 +29,11 @@ export const saveAnswerAsync = createAsyncThunk(
   'questions/saveAnswerAsync',
   async ({ authedUser, qid, answer }, { rejectWithValue }) => {
     try {
-      console.log('res1: ', {authedUser, qid, answer});
-      const response = await _saveQuestionAnswer({authedUser, qid, answer})
-      console.log('res2: ', response);
-      return response;
+      console.log('res1: ', authedUser, qid, answer);
+      // const response = 
+      await _saveQuestionAnswer({ authedUser, qid, answer })
+      // console.log('res2: ', response);
+      return { authedUser, qid, answer };
     } catch (err) {
       return rejectWithValue(err.response);
     }
@@ -81,8 +81,16 @@ export const questionsSlice = createSlice({
 
     // to add answer
     builder.addCase(saveAnswerAsync.fulfilled, (state, action) => {
-      console.log('payload: ',action.payload)
-			// state.push(action.payload.todo);
+      state.questions = {
+        ...state.questions,
+          [action.payload.qid] : {
+            ...state.questions[action.payload.qid],
+            [action.payload.answer]: {
+              ...state.questions[action.payload.qid][action.payload.answer],
+              votes: state.questions[action.payload.qid][action.payload.answer].votes.concat([action.payload.authedUser])
+            }
+          }
+      }
 		})
     builder.addCase(saveAnswerAsync.rejected, (state, action) => {
       if (action.payload) {
