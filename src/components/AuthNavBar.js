@@ -15,7 +15,7 @@ const AuthNavBar = (props) => {
   const users = useSelector(state => state.combined.users)
 
   // Menubar for width > 576
-  const initialState = { activeItem: 'closest' }
+  const initialState = { activeItem: 'home' }
   const [state, setState] = useState(initialState);
 
   const userDetails = Object.keys(users)
@@ -27,7 +27,7 @@ const AuthNavBar = (props) => {
       };
     });
 
-  const handleItemClick = (e, { name }) => {
+  const handleItemClick = (_e, { name }) => {
     return setState({activeItem: name});
   }
 
