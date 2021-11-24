@@ -19,7 +19,7 @@ const LeaderboardSlice = (props) => {
               <p>{questionsAnswered}</p>
             </Grid.Row>
             <Grid.Row className='flex-justified' style={{color: darkerPurple}}>
-                <p>Unanswered questions</p>
+                <p>Created questions</p>
                 <p>{questionsCreated}</p>
             </Grid.Row>
           </Grid.Column>

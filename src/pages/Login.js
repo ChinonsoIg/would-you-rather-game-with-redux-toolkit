@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Select, Card, Image, Button, Container } from 'semantic-ui-react'
-import { login } from "../redux/slices/userSlice";
+import { login } from "../redux/slices/combinedSlice";
 import logo from "../assets/image/redux-logo.png";
 import { darkPurple, lighterPurple, reduxPurple, white } from "../utils/colours";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const users = useSelector(state => state.users.allUsers)
+  const users = useSelector(state => state.combined.users)
   let history = useHistory();
   let location = useLocation();
   let { from } = location.state || { from: { pathname: "/" } };

@@ -4,7 +4,7 @@ import { Card, Image, Grid, Button, Header } from 'semantic-ui-react';
 import { darkPurple, lighterPurple } from "../utils/colours";
 
 const Polls = (props) => {
-  const users = useSelector(state => state.users.allUsers)
+  const users = useSelector(state => state.combined.users)
   const { id, author, optionOne } = props;
 
   const userDetails = Object.keys(users).filter((user) => users[user].id === author).map(filteredUser => {

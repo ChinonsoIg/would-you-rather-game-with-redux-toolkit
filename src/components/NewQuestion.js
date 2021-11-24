@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import { Button, Card, Container, Divider, Header, Input } from 'semantic-ui-react';
 import { lighterPurple, darkPurple } from '../utils/colours';
-import { addQuestionAsync } from "../redux/slices/questionsSlice";
+import { addQuestionAsync } from "../redux/slices/combinedSlice";
 
 const NewQuestion = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const authedUser = useSelector(state => state.users.currentUser);
+  const authedUser = useSelector(state => state.combined.authedUser);
 
   const [optionOneText, setOptionOneText] = useState('');
   const [optionTwoText, setOptionTwoText] = useState('');

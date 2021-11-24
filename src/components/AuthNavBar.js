@@ -3,7 +3,7 @@ import { Menu, Image, Dropdown } from 'semantic-ui-react';
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { logout } from "../redux/slices/userSlice";
+import { logout } from "../redux/slices/combinedSlice";
 import { darkPurple } from '../utils/colours';
 
 const AuthNavBar = (props) => {
@@ -11,8 +11,8 @@ const AuthNavBar = (props) => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const authedUser = useSelector(state => state.users.currentUser);
-  const users = useSelector(state => state.users.allUsers)
+  const authedUser = useSelector(state => state.combined.authedUser);
+  const users = useSelector(state => state.combined.users)
 
   // Menubar for width > 576
   const initialState = { activeItem: 'closest' }

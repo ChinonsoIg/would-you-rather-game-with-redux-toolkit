@@ -1,6 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { _saveQuestionAnswer, _getQuestions, _saveQuestion } from "../../utils/_DATA";
+import { _getUsers, _getQuestions, _saveQuestionAnswer, _saveQuestion } from "../../utils/_DATA";
 
+export const getUsersAsync = createAsyncThunk(
+	'users/getUsersAsync',
+	async () => {
+		const users = await _getUsers();
+    return users;
+	}
+);
 
 export const fetchQuestionsAsync = createAsyncThunk(
   'questions/fetchAll',
@@ -29,10 +36,7 @@ export const saveAnswerAsync = createAsyncThunk(
   'questions/saveAnswerAsync',
   async ({ authedUser, qid, answer }, { rejectWithValue }) => {
     try {
-      console.log('res1: ', authedUser, qid, answer);
-      // const response = 
       await _saveQuestionAnswer({ authedUser, qid, answer })
-      // console.log('res2: ', response);
       return { authedUser, qid, answer };
     } catch (err) {
       return rejectWithValue(err.response);
@@ -40,13 +44,21 @@ export const saveAnswerAsync = createAsyncThunk(
   }
 );
 
-export const questionsSlice = createSlice({
-  name: 'questions',
+export const combinedSlice = createSlice({
+  name: 'combined',
   initialState: {
     loading: 'idle',
+    authedUser: null,
+    users: {},
     questions: {},
   },
   reducers: {
+    login: (state, action) => {
+      state.authedUser = action.payload;
+		},
+    logout: (state) => {
+      state.authedUser = null;
+		},
     questionsLoading: (state, action) => {
       if (state.loading === 'idle') {
         state.loading = 'pending'
@@ -60,15 +72,31 @@ export const questionsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // to fetch users
+    builder.addCase(getUsersAsync.fulfilled, (state, action) => {
+      state.users = action.payload
+    })
+
+    // to fetch questions
     builder.addCase(fetchQuestionsAsync.fulfilled, (state, action) => {
       state.questions = action.payload;
 		})
 
-    // to add question
+    // to dispatch question
 		builder.addCase(addQuestionAsync.fulfilled, (state, action) => {
+      // to add question to questions object
       state.questions = {
         ...state.questions,
         [action.payload.id]: action.payload
+      }
+
+      // to add question to users object
+      state.users = {
+        ...state.users,
+        [action.payload.author]: {
+          ...state.users[action.payload.author],
+          questions: state.users[action.payload.author].questions.concat([action.payload.id])
+        }
       }
 		})
     builder.addCase(addQuestionAsync.rejected, (state, action) => {
@@ -79,8 +107,10 @@ export const questionsSlice = createSlice({
       }
     })
 
-    // to add answer
+
+    // to dispatch answer
     builder.addCase(saveAnswerAsync.fulfilled, (state, action) => {
+      // to add answer to questions object
       state.questions = {
         ...state.questions,
           [action.payload.qid] : {
@@ -90,6 +120,18 @@ export const questionsSlice = createSlice({
               votes: state.questions[action.payload.qid][action.payload.answer].votes.concat([action.payload.authedUser])
             }
           }
+      }
+
+      // to add answer to users object
+      state.users = {
+        ...state.users,
+        [action.payload.authedUser]: {
+          ...state.users[action.payload.authedUser],
+          answers: {
+            ...state.users[action.payload.authedUser].answers,
+            [action.payload.qid]: action.payload.answer
+          }
+        }
       }
 		})
     builder.addCase(saveAnswerAsync.rejected, (state, action) => {
@@ -103,6 +145,6 @@ export const questionsSlice = createSlice({
 })
 
 
-export const { questionsLoading, questionsReceived } = questionsSlice.actions;
+export const { login, logout, questionsLoading, questionsReceived } = combinedSlice.actions;
 
-export default questionsSlice.reducer;
+export default combinedSlice.reducer;

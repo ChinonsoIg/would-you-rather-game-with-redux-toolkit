@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './slices/userSlice';
-import questionReducer from "./slices/questionsSlice";
+// import combinedSlice from './slices/combinedSlice';
+// import userReducer from './slices/userSlice';
+import combinedReducer from "./slices/combinedSlice";
 
 export const store = configureStore({
   reducer: {
-    users: userReducer,
-    questions: questionReducer
+    // users: userReducer,
+    combined: combinedReducer
   },
 });

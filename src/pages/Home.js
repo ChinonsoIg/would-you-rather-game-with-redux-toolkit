@@ -5,8 +5,8 @@ import { darkPurple } from '../utils/colours';
 
 
 const Home = () => {
-  const questions = useSelector(state => state.questions.questions);
-  const authedUser = useSelector(state => state.users.currentUser);
+  const questions = useSelector(state => state.combined.questions);
+  const authedUser = useSelector(state => state.combined.authedUser);
 
   const unansweredQuestions = Object.keys(questions)
     .filter((i) => (

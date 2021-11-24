@@ -5,8 +5,8 @@ import {
   Route,
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getUsersAsync } from "./redux/slices/userSlice";
-import { fetchQuestionsAsync } from "./redux/slices/questionsSlice";
+import { getUsersAsync } from "./redux/slices/combinedSlice";
+import { fetchQuestionsAsync } from "./redux/slices/combinedSlice";
 import Login from "./pages/Login";
 import Home from './pages/Home';
 import PrivateRoute from "./components/PrivateRoute";

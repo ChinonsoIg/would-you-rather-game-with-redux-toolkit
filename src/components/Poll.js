@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Grid, Header, Image, Segment, Progress, Container, Button, Form, Radio } from 'semantic-ui-react';
-import { saveAnswerAsync } from '../redux/slices/questionsSlice';
+import { saveAnswerAsync } from '../redux/slices/combinedSlice';
 import VoteSticker from "./VoteSticker";
 import { darkPurple, lighterPurple, lightPurple, white } from "../utils/colours";
 
@@ -13,8 +13,8 @@ const Poll = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const { id } = params;
-  const questions = useSelector(state => state.questions.questions);
-  const { currentUser, allUsers } = useSelector(state => state.users);
+  const questions = useSelector(state => state.combined.questions);
+  const { authedUser, users } = useSelector(state => state.combined);
   
 
 
@@ -39,12 +39,12 @@ const Poll = () => {
       return mapPollView;
     });
     
-  const authorDetails = Object.keys(allUsers)
-    .filter((user) => allUsers[user].id === pollView[0].author)
+  const authorDetails = Object.keys(users)
+    .filter((user) => users[user].id === pollView[0].author)
     .map(filteredUser => {
       return { 
-        name: allUsers[filteredUser].name, 
-        avatar: allUsers[filteredUser].avatarURL.default 
+        name: users[filteredUser].name, 
+        avatar: users[filteredUser].avatarURL.default 
       };
     });
   
@@ -58,15 +58,15 @@ const Poll = () => {
       alert('Select an option!!')
     } else {
       dispatch(
-        saveAnswerAsync({authedUser: currentUser, qid: id, answer: value})
+        saveAnswerAsync({authedUser: authedUser, qid: id, answer: value})
       );
     }
   };
 
   
   if (
-    pollView[0].optionOne.votes.includes(currentUser) ||
-    pollView[0].optionTwo.votes.includes(currentUser)
+    pollView[0].optionOne.votes.includes(authedUser) ||
+    pollView[0].optionTwo.votes.includes(authedUser)
     ) {
       return (
         <Container>
@@ -77,8 +77,8 @@ const Poll = () => {
               const totalVotes = optionOneVotes + optionTwoVotes;
               const optionOnePercent = ((optionOneVotes / totalVotes) * 100).toFixed(1);
               const optionTwoPercent = ((optionTwoVotes / totalVotes) * 100).toFixed(1);
-              const optionOneColor = q.optionOne.votes.includes(currentUser);
-              const optionTwoColor = q.optionTwo.votes.includes(currentUser);
+              const optionOneColor = q.optionOne.votes.includes(authedUser);
+              const optionTwoColor = q.optionTwo.votes.includes(authedUser);
 
               return (
                 <div key={q.qid}>
