@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Card, Image, Grid, Button, Header } from 'semantic-ui-react';
 import { darkPurple, lighterPurple } from "../utils/colours";
+import { sliceFxn } from "../utils/helpers";
 
 const Polls = (props) => {
   const users = useSelector(state => state.combined.users)
@@ -28,7 +29,7 @@ const Polls = (props) => {
             </Grid.Column>
             <Grid.Column width={11}>
               <Header as='h5' style={{color: darkPurple}}>Would you rather</Header>
-              <p>... {optionOne.text} ... </p>
+              <p>... {sliceFxn(optionOne.text)} ... </p>
               <Button basic color='purple' as={Link} to={`/question/${id}`} fluid>
                 View Poll
               </Button>
